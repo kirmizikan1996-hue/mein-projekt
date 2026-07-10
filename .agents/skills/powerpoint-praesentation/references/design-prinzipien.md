@@ -128,3 +128,21 @@ Diese Regeln bestimmen, wie sauber die HTML→PPTX-Konvertierung wird:
   Containers geben (siehe `assets/slide-template.html`, `.stat-number`/`.stat-label`), damit
   die gemessene Box die volle Containerbreite hat und Luft für Font-Abweichungen bleibt. Bei
   kurzen Diagramm-Labels in festen Boxen (Icon-Kreise, Knoten, Karten) gilt dieselbe Regel.
+- **`data-pptx` nie auf ein Element setzen, das selbst eine Hintergrundfarbe, einen
+  Rahmen oder dekorative Kind-Elemente (z. B. `::before`-Bullets, Icons) trägt, die im
+  Bild erhalten bleiben sollen.** Der Render-Schritt blendet `data-pptx`-Elemente vor dem
+  Hintergrund-Screenshot per `visibility:hidden` aus — und `visibility` vererbt sich auf
+  ALLE Nachfahren inklusive Pseudo-Elemente. Eine farbige Tabellenzelle mit `data-pptx`
+  direkt auf der Zelle verliert dadurch ihre komplette Hintergrundfarbe im fertigen Bild,
+  nicht nur ihren Text (in der Chromium-Vorschau sieht man das nicht, da dort nichts
+  ausgeblendet wird — der Fehler zeigt sich erst im echten PowerPoint-Export). Lösung: die
+  Hintergrundfarbe/Deko bleibt auf einem äußeren Element OHNE `data-pptx`, der Text wandert
+  in ein schlichtes inneres `<div>` (kein `<span>`, siehe Regel oben) MIT `data-pptx`, das
+  selbst keine eigene Hintergrundfarbe hat. Aus demselben Grund werden benutzerdefinierte
+  `::before`/`::after`-Bullets auf `<li>`-Elementen innerhalb eines `data-pptx`-`<ul>`
+  ebenfalls unsichtbar — verlasse dich hier nicht auf eigene Bullet-Gestaltung; das
+  Build-Skript setzt ohnehin automatisch ein einfaches "•"/"N." davor.
+- **Nach dem Bauen einmal den echten PowerPoint-Export prüfen** (`scripts/export_slides.ps1`),
+  nicht nur die Chromium-Referenzbilder — genau diese Klasse von Fehlern (verschwundene
+  Hintergründe/Deko) ist in der Chromium-Vorschau unsichtbar und fällt nur im tatsächlichen
+  PowerPoint-Rendering auf.
