@@ -108,6 +108,20 @@ Diese Regeln bestimmen, wie sauber die HTML→PPTX-Konvertierung wird:
 - **`data-pptx` nur auf das äußerste Element eines Textblocks setzen**, nicht auf
   jedes Kind einzeln. Bei einer Liste: `data-pptx` auf das `<ul>`/`<ol>`, nicht auf
   jedes `<li>` — sonst entstehen viele einzelne Textboxen statt einer zusammenhängenden.
+- **Für Checklisten/wiederholte Kurzpunkte (z. B. Vorteile/Nachteile mit einem Icon
+  pro Zeile) NICHT jede Zeile als eigene unabhängige `data-pptx`-Textbox anlegen.**
+  Mehrere einzeilige, unabhängig positionierte Textboxen können in echtem PowerPoint
+  durch Zeilenabstand-Eigenheiten optisch zusammenrutschen, obwohl ihre in Chromium
+  gemessenen Positionen korrekt mit Abstand zueinander waren (die Boxen selbst sitzen
+  richtig, aber der Text läuft über den unteren Rand der kurzen Box hinaus und wirkt
+  dadurch enger an der nächsten Box als beabsichtigt). Zuverlässig ist stattdessen
+  **eine gemeinsame Liste** (`<ul data-pptx>` mit mehreren `<li>`) — dort wird der
+  tatsächlich gemessene Abstand zwischen den Zeilen als `space_after` je Absatz in
+  einer einzigen Textbox übernommen, was in jedem bisher getesteten Fall zuverlässig
+  aussah. Ein farbiges Icon direkt neben jeder Zeile lässt sich damit nicht mehr
+  umsetzen (das Icon würde wie oben beschrieben beim Hintergrund-Rendering mit
+  verschwinden) — Vor-/Nachteile stattdessen über die Kartenhintergrundfarbe
+  (z. B. helles Grün/Rot) unterscheiden, nicht über einzelne Icon-Marker.
 - Innerhalb eines `data-pptx`-Blocks sind `<strong>`, `<em>`, `<span style="color:...">`
   erlaubt und werden als einzelne formatierte Runs übernommen (z. B. eine fett hervorgehobene
   Zahl mitten im Satz).
