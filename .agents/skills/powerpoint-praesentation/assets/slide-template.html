@@ -83,9 +83,25 @@
     font-size: 22px;
     color: #5A5F73;
   }
+
+  /* Firmenlogo: auf JEDER Folie oben rechts, siehe design-prinzipien.md "Corporate Branding".
+     Kein data-pptx — das Logo ist Bildmaterial, kein editierbarer Text, und landet
+     dadurch korrekt im gerenderten Hintergrundbild. */
+  .brand-logo {
+    position: absolute;
+    top: 56px;
+    right: 64px;
+    height: 72px;
+    width: 72px;
+  }
 </style>
 </head>
 <body>
+  <!-- Logo-Datei vor dem Rendern aus Bilder/Raiffeisen_Österreich_logo.svg.webp (im Skill-Ordner)
+       in denselben Ordner wie diese slide-N.html-Dateien kopieren, z. B. als logo-raiffeisen.webp,
+       damit der relative Pfad unten unabhängig vom Skill-Installationsort funktioniert. -->
+  <img class="brand-logo" src="logo-raiffeisen.webp" alt="">
+
   <div class="slide">
     <!-- Nur Elemente mit data-pptx werden zu echten, editierbaren PowerPoint-Textboxen.
          Alles andere (Karten, Hintergrundfarben, Icons, Formen) landet im

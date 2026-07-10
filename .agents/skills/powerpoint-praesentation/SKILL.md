@@ -57,6 +57,13 @@ Bevor du HTML schreibst:
   enthält bereits das nötige Setup: 1920×1080px-Canvas (= 13.333in × 7.5in Folienformat),
   CSS-Reset, sichere Schriftart, Beispiel für `data-pptx`-Markierung inkl. Bulletliste
   und Inline-Hervorhebung.
+- **Firmenlogo (Pflicht, jede Folie):** Das Raiffeisen-Logo (`bilder/Raiffeisen_Österreich_logo.svg.webp`
+  in diesem Skill-Ordner) gehört auf **jede** Folie oben rechts — auch auf der Titelfolie
+  und auf dunklen Folien. Vor dem Rendern die Datei in den Arbeitsordner mit den
+  `slide-N.html`-Dateien kopieren (z. B. als `logo-raiffeisen.webp`) und wie in
+  `slide-template.html` als `<img class="brand-logo" ...>` einbinden — ohne `data-pptx`,
+  da es Bildmaterial ist, kein editierbarer Text. Details siehe
+  `references/design-prinzipien.md` Abschnitt „Corporate Branding".
 - Jede Folie ist eine eigenständige HTML-Datei (kein gemeinsames externes CSS/JS nötig,
   Inline-`<style>` pro Datei ist am robustesten fürs Rendering).
 - **Nur Text mit `data-pptx` markieren**, alles Dekorative bleibt unmarkiert. Details

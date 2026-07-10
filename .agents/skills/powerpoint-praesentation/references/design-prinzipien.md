@@ -4,6 +4,26 @@ Diese Datei bündelt Design-Entscheidungen, bevor die erste Zeile HTML geschrieb
 Lies sie vor Slide 1, nicht während der Umsetzung — Design-Entscheidungen, die mitten
 in der Arbeit fallen, führen zu inkonsistenten Decks.
 
+## 0. Corporate Branding (Pflicht)
+
+**Das Raiffeisen-Logo gehört auf jede einzelne Folie** — Titelfolie, Inhaltsfolien,
+Schlussfolie, hell wie dunkel. Datei: `bilder/Raiffeisen_Österreich_logo.svg.webp`
+(relativ zu diesem Skill-Ordner; 120×120px, transparenter Hintergrund, schwarzes
+Giebelkreuz auf gelbem Grund).
+
+- Position: oben rechts, konsistent auf jeder Folie an derselben Stelle
+  (siehe `.brand-logo` in `assets/slide-template.html`: `top:56px; right:64px;`,
+  Höhe ca. 72px). Nicht pro Folie neu positionieren — Konsistenz ist hier wichtiger
+  als individuelle Anpassung.
+- Vor dem Rendern in den Arbeitsordner mit den `slide-N.html`-Dateien kopieren, damit
+  ein einfacher relativer Pfad (`logo-raiffeisen.webp`) funktioniert, unabhängig davon,
+  wo der Skill-Ordner selbst liegt.
+- **Kein `data-pptx`** auf dem `<img>`-Tag — das Logo ist Bildmaterial und soll im
+  gerenderten Hintergrundbild landen, nicht als eigene PowerPoint-Textbox.
+- Der gelbe Logo-Hintergrund braucht auf dunklen Folien (Titel, Fazit) keinen
+  zusätzlichen Rahmen — er hat genug Eigenkontrast. Auf sehr hellen Folienbereichen
+  trotzdem kurz prüfen, ob das Logo sich klar vom Hintergrund abhebt.
+
 ## 1. Vor dem Start festlegen
 
 - **Farbpalette, die zum Thema passt.** Nicht Standard-Blau. Die Palette soll sich
@@ -100,3 +120,11 @@ Diese Regeln bestimmen, wie sauber die HTML→PPTX-Konvertierung wird:
   Skills: Text bleibt editierbar, Gestaltung bleibt exakt.
 - `box-sizing: border-box` und `margin: 0` global setzen (siehe `assets/slide-template.html`)
   — Standard-Browserabstände auf `h1`/`p`/`ul` würden sonst die Position leicht verschieben.
+- **`data-pptx` nie auf ein `inline`-Element ohne eigene Breite setzen** (z. B. ein `<span>`
+  in einer zentrierten Flexbox). `getBoundingClientRect()` misst bei `inline`-Elementen nur
+  die exakte Textbreite — ohne jede Toleranz. Da PowerPoint dieselbe Schrift minimal anders
+  misst als Chromium, bricht der Text dann in der echten .pptx um, obwohl die Chromium-Vorschau
+  perfekt aussah. Lösung: das `data-pptx`-Element `display:block; width:100%` innerhalb seines
+  Containers geben (siehe `assets/slide-template.html`, `.stat-number`/`.stat-label`), damit
+  die gemessene Box die volle Containerbreite hat und Luft für Font-Abweichungen bleibt. Bei
+  kurzen Diagramm-Labels in festen Boxen (Icon-Kreise, Knoten, Karten) gilt dieselbe Regel.
