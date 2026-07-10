@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Folie</title>
+<style>
+  /* Reset: sorgt für vorhersehbare, pixelgenaue Positionen */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: Calibri, Arial, sans-serif; /* sichere Schrift, siehe references/design-prinzipien.md */
+  }
+  body {
+    position: relative;
+    background: #FFFFFF;
+  }
+
+  /* --- Beispiel-Layout: Titel oben links, Bulletliste, Stat-Callout rechts --- */
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    padding: 96px 120px;   /* 1in oben/unten, 1.25in links/rechts bei 96px/in Basis (skaliert automatisch mit) */
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .eyebrow {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1E2761;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  h1 {
+    font-size: 56px;
+    font-weight: 700;
+    color: #1E2761;
+    line-height: 1.15;
+    max-width: 1200px;
+  }
+  .content-row {
+    flex: 1;
+    display: flex;
+    gap: 64px;
+    align-items: center;
+  }
+  .bullets {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .bullets ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .bullets li {
+    font-size: 26px;
+    color: #2B2B2B;
+    line-height: 1.4;
+  }
+  .bullets li strong { color: #1E2761; }
+
+  .stat-card {
+    flex: 0.8;
+    background: #F4F6FB;
+    border-radius: 24px;
+    padding: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stat-number {
+    font-size: 88px;
+    font-weight: 700;
+    color: #1E2761;
+  }
+  .stat-label {
+    font-size: 22px;
+    color: #5A5F73;
+  }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Nur Elemente mit data-pptx werden zu echten, editierbaren PowerPoint-Textboxen.
+         Alles andere (Karten, Hintergrundfarben, Icons, Formen) landet im
+         gerenderten Hintergrundbild und bleibt visuell exakt, ist aber nicht
+         mehr einzeln in PowerPoint anklickbar. -->
+    <div class="eyebrow" data-pptx>Quartalsbericht Q3</div>
+    <h1 data-pptx>Klarer Titel, der die Kernbotschaft der Folie in einem Satz trägt</h1>
+
+    <div class="content-row">
+      <div class="bullets">
+        <ul data-pptx>
+          <li>Erste Kernaussage mit <strong>einem betonten Begriff</strong> zur Orientierung</li>
+          <li>Zweite Kernaussage, kurz und konkret formuliert</li>
+          <li>Dritte Kernaussage mit Zahl oder Fakt als Beleg</li>
+        </ul>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-pptx>+42%</div>
+        <div class="stat-label" data-pptx>Wachstum gegenüber Vorquartal</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "powerpoint-praesentation-scripts",
+  "private": true,
+  "dependencies": {
+    "playwright": "^1.61.0"
+  }
+}
